@@ -2,7 +2,9 @@ import axios from 'axios';
 import { GameCharacter } from "@/types/GameCharacter";
 
 // Create an Axios instance with the backend URL
-const API = axios.create({ baseURL: 'http://localhost:8080/api/characters' });
+const API = axios.create({ baseURL: '/api/characters', // Proxy will forward this to localhost:8080
+    withCredentials: true
+});
 
 // Fetch all characters
 export const getAllCharacters = (): Promise<GameCharacter[]> =>
