@@ -1,4 +1,7 @@
 package com.barttynior.backend.repositories;
 
-public class CharacterRepository {
+import com.barttynior.backend.models.GameCharacter;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CharacterRepository extends JpaRepository<GameCharacter, Long> {
 }

@@ -4,6 +4,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -13,29 +15,29 @@ public class GameCharacter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Getter @Setter private Long id;
 
     @NotBlank(message = "Name is required")
-    private String name;
+    @Getter @Setter private String name;
 
     @NotBlank(message = "Game name is required")
     @Column(name = "game_name")
-    private String gameName;
+    @Getter @Setter private String gameName;
 
     @Min(value = 0, message = "Health Points cannot be negative")
     @Column(name = "health_points")
-    private int healthPoints;
+    @Getter @Setter private int healthPoints;
 
     @Min(value = 0, message = "Attack Points cannot be negative")
     @Column(name = "attack_points")
-    private int attackPoints;
+    @Getter @Setter private int attackPoints;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    @Getter @Setter private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Getter @Setter private LocalDateTime updatedAt;
 
 }
