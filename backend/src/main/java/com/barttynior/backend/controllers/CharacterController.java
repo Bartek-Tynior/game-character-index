@@ -5,6 +5,7 @@ import com.barttynior.backend.services.CharacterService;
 import com.barttynior.backend.exceptions.CharacterNotFoundException;
 import com.barttynior.backend.exceptions.InvalidCharacterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,5 +53,15 @@ public class CharacterController {
         }
         characterService.deleteCharacter(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/battle")
+    public ResponseEntity<GameCharacter> simulateBattle(@RequestParam Long id1, @RequestParam Long id2) {
+        try {
+            GameCharacter winner = characterService.simulateBattle(id1, id2);
+            return ResponseEntity.ok(winner);
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }

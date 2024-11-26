@@ -1,5 +1,6 @@
 package com.barttynior.backend.services;
 
+import com.barttynior.backend.exceptions.CharacterNotFoundException;
 import com.barttynior.backend.models.GameCharacter;
 import com.barttynior.backend.repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,25 @@ public class CharacterService {
 
     public void deleteCharacter(Long id) {
         characterRepository.deleteById(id);
+    }
+
+    public GameCharacter simulateBattle(Long id1, Long id2) {
+        GameCharacter character1 = characterRepository.findById(id1)
+                .orElseThrow(() -> new CharacterNotFoundException(id1));
+        GameCharacter character2 = characterRepository.findById(id2)
+                .orElseThrow(() -> new CharacterNotFoundException(id2));
+
+        int character1RemainingHealth = character1.getHealthPoints() - character2.getAttackPoints();
+        int character2RemainingHealth = character2.getHealthPoints() - character1.getAttackPoints();
+
+        // Determine the winner
+        if (character1RemainingHealth > character2RemainingHealth) {
+            return character1;
+        } else if (character2RemainingHealth > character1RemainingHealth) {
+            return character2;
+        } else {
+            throw new IllegalStateException("The battle is a tie!");
+        }
     }
 
 }

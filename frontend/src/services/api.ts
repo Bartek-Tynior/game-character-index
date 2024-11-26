@@ -82,3 +82,6 @@ export const deleteCharacter = async (id: number): Promise<void> => {
       handleError(error as AxiosError);
     }
 };
+
+export const simulateBattle = (id1: number, id2: number): Promise<GameCharacter> =>
+    API.post('/battle', null, { params: { id1, id2 } }).then((response) => response.data);
